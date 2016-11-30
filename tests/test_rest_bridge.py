@@ -5,9 +5,9 @@ import os
 import tempfile
 import unittest
 
-import jiracli
-from jiracli.bridge import JiraRestBridge
-from jiracli.utils import Config
+import jira_cli
+from jira_cli.bridge import JiraRestBridge
+from jira_cli.utils import Config
 from .common_bridge_cases import BridgeTests, jiravcr
 
 
@@ -15,9 +15,9 @@ class RestBridgeTests(unittest.TestCase, BridgeTests):
     def setUp(self):
         tmp_config = tempfile.mktemp()
         self.config = Config(tmp_config)
-        jiracli.utils.CONFIG_FILE = tmp_config
+        jira_cli.utils.CONFIG_FILE = tmp_config
         self.cache_dir = tempfile.mkdtemp()
-        jiracli.cache.CACHE_DIR = self.cache_dir
+        jira_cli.cache.CACHE_DIR = self.cache_dir
         self.config.username = "testuser"
         self.config.password = "testpassword"
         self.vcr_directory = "fixtures/rest"

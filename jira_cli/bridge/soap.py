@@ -4,11 +4,11 @@
 import socket
 from suds import WebFault
 from suds.client import Client
-from jiracli.bridge import JiraBridge
-from jiracli.cache import cached
-from jiracli.errors import JiraCliError, JiraInitializationError, \
+from jira_cli.bridge import JiraBridge
+from jira_cli.cache import cached
+from jira_cli.errors import JiraCliError, JiraInitializationError, \
     JiraAuthenticationError, UsageError
-from jiracli.utils import soap_recursive_dict
+from jira_cli.utils import soap_recursive_dict
 from six.moves.urllib import request
 
 class JiraSoapBridge(JiraBridge):

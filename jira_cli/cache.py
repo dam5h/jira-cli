@@ -8,7 +8,7 @@ import os
 import pickle
 import shutil
 import time
-from jiracli.utils import CONFIG_DIR
+from jira_cli.utils import CONFIG_DIR
 
 CACHE_DIR = os.path.join(CONFIG_DIR, 'cache')
 CACHE_DURATION = 60*60*24

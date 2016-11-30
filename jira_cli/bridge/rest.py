@@ -4,14 +4,14 @@
 from jira.client import JIRA
 from jira.resources import Resource
 from requests import RequestException
-from jiracli.bridge import JiraBridge
-from jiracli.cache import cached
-from jiracli.errors import JIRAError
-from jiracli.errors import (
+from jira_cli.bridge import JiraBridge
+from jira_cli.cache import cached
+from jira_cli.errors import JIRAError
+from jira_cli.errors import (
     JiraCliError, JiraAuthenticationError,
     JiraInitializationError
 )
-from jiracli.utils import rest_recursive_dict, map_rest_resource
+from jira_cli.utils import rest_recursive_dict, map_rest_resource
 
 
 class JiraRestBridge(JiraBridge):

@@ -3,12 +3,12 @@ import unittest
 
 import mock
 
-import jiracli
-from jiracli.errors import JiraAuthenticationError, JiraInitializationError
-from jiracli.interface import build_parser, initialize
-from jiracli.processor import ViewCommand
-from jiracli.utils import Config
-from jiracli.interface import cli
+import jira_cli
+from jira_cli.errors import JiraAuthenticationError, JiraInitializationError
+from jira_cli.interface import build_parser, initialize
+from jira_cli.processor import ViewCommand
+from jira_cli.utils import Config
+from jira_cli.interface import cli
 
 
 class CliParsingTests(unittest.TestCase):
@@ -28,17 +28,17 @@ class CliParsingTests(unittest.TestCase):
         self.assertRaises(SystemExit, parser.parse_args, "--jira-url=http://foo.bar -u testuser -p testpass".split(" "))
 
     def test_configure_argument(self):
-        with mock.patch("jiracli.interface.print_output"):
-            with mock.patch("jiracli.interface.prompt") as prompt:
-                with mock.patch("jiracli.interface.initialize") as init:
+        with mock.patch("jira_cli.interface.print_output"):
+            with mock.patch("jira_cli.interface.prompt") as prompt:
+                with mock.patch("jira_cli.interface.initialize") as init:
                     cli(["--v1", "configure"])
                     cli(["configure"])
                     self.assertEqual(init.call_count, 2)
 
     def test_clear_cache_argument(self):
-        with mock.patch("jiracli.interface.print_output"):
-            with mock.patch("jiracli.interface.prompt") as prompt:
-                with mock.patch("jiracli.interface.clear_cache") as clear_cache:
+        with mock.patch("jira_cli.interface.print_output"):
+            with mock.patch("jira_cli.interface.prompt") as prompt:
+                with mock.patch("jira_cli.interface.clear_cache") as clear_cache:
                     cli(["--v1" , "clear_cache"])
                     cli(["clear_cache"])
                     self.assertEqual(clear_cache.call_count, 2)
@@ -82,8 +82,8 @@ class CliInitParsing(unittest.TestCase):
         self.cfg = Config(tmp_config)
 
     def test_first_run(self):
-        with mock.patch("jiracli.interface.prompt") as prompt:
-            with mock.patch("jiracli.bridge.JiraSoapBridge") as bridge:
+        with mock.patch("jira_cli.interface.prompt") as prompt:
+            with mock.patch("jira_cli.bridge.JiraSoapBridge") as bridge:
                 def prompt_response(msg, *a):
                     if msg.startswith('username'):
                         return 'testuser'
@@ -98,8 +98,8 @@ class CliInitParsing(unittest.TestCase):
                 self.assertEqual(bridge.return_value, initialize(self.cfg))
 
     def test_first_run_with_error_and_persist(self):
-        with mock.patch("jiracli.interface.prompt") as prompt:
-            with mock.patch("jiracli.bridge.JiraSoapBridge") as bridge:
+        with mock.patch("jira_cli.interface.prompt") as prompt:
+            with mock.patch("jira_cli.bridge.JiraSoapBridge") as bridge:
                 def prompt_response(msg, *a):
                     if msg.startswith('username'):
                         return 'testuser'
@@ -131,8 +131,8 @@ class CliInitParsing(unittest.TestCase):
         self.cfg.username = 'testuser'
         self.cfg.password = 'testpass'
         self.cfg.base_url = 'http://www.foobar.com'
-        with mock.patch("jiracli.interface.prompt") as prompt:
-            with mock.patch("jiracli.bridge.JiraSoapBridge") as bridge:
+        with mock.patch("jira_cli.interface.prompt") as prompt:
+            with mock.patch("jira_cli.bridge.JiraSoapBridge") as bridge:
                 prompt.assert_call_count(0)
                 bridge.assert_call_args('testuser', 'testpass')
                 bridge.return_value.login.assert_call_args('testuser', 'testpass')
@@ -142,7 +142,7 @@ class CliInitParsing(unittest.TestCase):
                 self.assertEqual(bridge.return_value, initialize(self.cfg))
 
     def test_soap_token(self):
-        with mock.patch("jiracli.bridge.JiraSoapBridge") as bridge:
+        with mock.patch("jira_cli.bridge.JiraSoapBridge") as bridge:
             self.cfg.base_url = 'http://www.foobar.com'
             bridge.return_value.ping.return_value = True
             bridge.return_value.ping.assert_call_count(1)
@@ -153,10 +153,10 @@ class BackwardCompatibilityTests(unittest.TestCase):
     def setUp(self):
         tmp_config = tempfile.mktemp()
         self.cfg = Config(tmp_config)
-        jiracli.utils.CONFIG_FILE = tmp_config
+        jira_cli.utils.CONFIG_FILE = tmp_config
 
     def test_jira_cli_v1_invoked(self):
-        with mock.patch("jiracli.interface.old_main") as old_main:
+        with mock.patch("jira_cli.interface.old_main") as old_main:
             self.cfg.v1 = "1"
             self.cfg.save()
             cli(['--help'])
@@ -168,8 +168,8 @@ class BackwardCompatibilityTests(unittest.TestCase):
 
     def test_jira_cli_v2_invoked(self):
         with mock.patch("sys.stdout") as stdout:
-            with mock.patch("jiracli.interface.old_main") as old_main:
-                with mock.patch("jiracli.processor.Command.execute") as execute:
+            with mock.patch("jira_cli.interface.old_main") as old_main:
+                with mock.patch("jira_cli.processor.Command.execute") as execute:
                     self.assertRaises(SystemExit, cli, ['--help', '--v2'])
                     self.assertRaises(SystemExit, cli, ['--help'])
                     self.assertRaises(SystemExit, cli, ['--help'])

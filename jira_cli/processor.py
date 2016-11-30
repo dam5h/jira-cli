@@ -5,9 +5,9 @@ from abc import ABCMeta, abstractmethod
 
 import six
 
-from jiracli.cli import colorfunc
-from jiracli.errors import UsageError, UsageWarning
-from jiracli.utils import get_text_from_editor, print_output
+from jira_cli.cli import colorfunc
+from jira_cli.errors import UsageError, UsageWarning
+from jira_cli.utils import get_text_from_editor, print_output
 try:
     from collections import OrderedDict
 except ImportError:

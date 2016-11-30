@@ -10,14 +10,14 @@ import sys
 
 from setuptools import setup, find_packages
 
-import jiracli
+import jira_cli
 
 import versioneer
 
-versioneer.versionfile_source = "jiracli/_version.py"
-versioneer.versionfile_build = "jiracli/version.py"
+versioneer.versionfile_source = "jira_cli/_version.py"
+versioneer.versionfile_build = "jira_cli/version.py"
 versioneer.tag_prefix = ""
-versioneer.parentdir_prefix = "jiracli-"
+versioneer.parentdir_prefix = "jira_cli-"
 
 this_dir = os.path.abspath(os.path.dirname(__file__))
 REQUIREMENTS = [k for k in open(
@@ -45,7 +45,7 @@ setup(name='jira-cli',
      install_requires = REQUIREMENTS,
      entry_points = {
          'console_scripts' : [
-             'jira-cli = jiracli.interface:cli',
+             'jira-cli = jira_cli.interface:cli',
              ]
         },
     **extra

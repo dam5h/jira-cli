@@ -6,17 +6,17 @@ import keyring
 
 from suds import WebFault
 import sys
-from jiracli import __version__
-from jiracli.bridge import get_bridge
-from jiracli.cache import clear_cache
-from jiracli.errors import JIRAError
-from jiracli.errors import JiraAuthenticationError, JiraInitializationError
-from jiracli.errors import  UsageWarning, JiraCliError, UsageError
-from jiracli.processor import ViewCommand, AddCommand, UpdateCommand
-from jiracli.processor import ListCommand
-from jiracli.utils import print_error, WARNING, Config, colorfunc, prompt, \
+from jira_cli import __version__
+from jira_cli.bridge import get_bridge
+from jira_cli.cache import clear_cache
+from jira_cli.errors import JIRAError
+from jira_cli.errors import JiraAuthenticationError, JiraInitializationError
+from jira_cli.errors import  UsageWarning, JiraCliError, UsageError
+from jira_cli.processor import ViewCommand, AddCommand, UpdateCommand
+from jira_cli.processor import ListCommand
+from jira_cli.utils import print_error, WARNING, Config, colorfunc, prompt, \
     print_output
-from jiracli.cli import main as old_main
+from jira_cli.cli import main as old_main
 
 def initialize(config, base_url=None, username=None, password=None,
                persist=True, error=False, protocol='soap'):
@@ -244,7 +244,7 @@ def cli(args=sys.argv[1:]):
             if "--v1" in args or config.v1:
                 if '--v1' in sys.argv:
                     print_error(
-                        "Use of the v1 interface is no longer supported. Please refer to jiracli.readthedocs.io",
+                        "Use of the v1 interface is no longer supported. Please refer to jira_cli.readthedocs.io",
                         WARNING
                     )
                     sys.argv.remove("--v1")
